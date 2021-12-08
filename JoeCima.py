@@ -1,12 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 import webbrowser
-class colors:
-    RED = '\033[31m'
-    ENDC = '\033[m'
-    GREEN = '\033[32m'
-    YELLOW = '\033[33m'
-    BLUE = '\033[34m'
+
 while True:
     option = int(input("What do you want to do?(enter 1 or 2)\n1- Series\n2- Movie\n"))
     if option<=2 and option>=1:
@@ -21,7 +16,7 @@ if option ==1:
         x=1
         html_page = requests.get("https://riko.egybest.asia/season/" + s + "-season-" + str(x))
         while html_page.status_code != 404:
-            print(colors.GREEN+ "Season "+str(x)+" is available!"+colors.ENDC)
+            print("Season "+str(x)+" is available!")
             x+=1
             html_page = requests.get("https://riko.egybest.asia/season/" + s + "-season-" + str(x))
         season = int(input("Enter Season number: "))
