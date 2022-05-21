@@ -15,8 +15,9 @@ A console application to scrape a valid watching links for any movie or series w
 
 ## How to run
 Enter the directory where the script is located then type the following to the console
-> python main.py
-
+```Bash
+python main.py
+```
 ## Author
 [Yousef Kotp](https://github.com/yousefkotp)
 
