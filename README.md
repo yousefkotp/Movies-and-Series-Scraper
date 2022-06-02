@@ -10,7 +10,7 @@ A console application to scrape a valid watching links for any movie or series w
 1. PyCharm (IDE)
 2. Python
 3. BeautifulSoup library
-4. requests libarary
+4. requests library
 5. webbrowser library
 
 ## How to run
