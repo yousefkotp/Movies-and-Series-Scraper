@@ -38,8 +38,7 @@ if option == 1:                      # Watch a series
     seasons_links = temp_list.findAll("a")          # i.get("href")
     seasons_links.reverse()
 
-    print("There are "+str(len(seasons_links))+" Seasons, Enter your desired season number: ")
-    season = int(input())
+    season = int(input("There are "+str(len(seasons_links))+" Seasons, Enter your desired season number: "))
 
     # Preparing html page and soup to be used to scrape episodes links
     html_page = requests.get(seasons_links[season-1].get("href"))
