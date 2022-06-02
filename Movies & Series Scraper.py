@@ -11,6 +11,7 @@ while True:
 
 if option ==1:                      # Watch a series
     series_name = input("Enter series name: ")
+    series_name.rstrip(" ")
     series_name = series_name.replace(" ", "-")
 
     # Preparing our html page and soup
@@ -20,7 +21,7 @@ if option ==1:                      # Watch a series
     # Scraping links and titles of series resulted from the query
     links_of_recommended_series = soup.find_all("a",{"class":"movie"})
     titles_of_recommended_series = soup.find_all("span",{"class":"title"})
-    print("Which series do you want to watch? \n")
+    print("Which series do you want to watch?")
 
     counter_series = 1
     for i in titles_of_recommended_series:
@@ -65,6 +66,7 @@ if option ==1:                      # Watch a series
 
 elif option==2:       #Watch a movie
     movie_name= input("Enter movie name: ")
+    movie_name.rstrip(" ")
     movie_name = movie_name.replace(" ", "%20")
 
     html_page = requests.get("https://riko.egybest.asia/explore/?q="+movie_name)
@@ -91,10 +93,10 @@ elif option==2:       #Watch a movie
 
 
 else:       # Download a whole season
-    series_name = input("Enter series name:")
+    series_name = input("Enter series name: ")
     series_name.rstrip(" ")
     series_name = series_name.replace(" ", "-")
-    season = int(input("Enter Season number:"))
+    season = int(input("Enter Season number: "))
 
     html_page = requests.get("https://mycima.dev:2053/watch/%D9%85%D8%B4%D8%A7%D9%87%D8%AF%D8%A9-%D9%85%D8%B3%D9%84%D8%B3%D9%84-"+series_name+"-%D9%85%D9%88%D8%B3%D9%85-"+str(season)+"-%D8%AD%D9%84%D9%82%D8%A9-1-")
     if html_page.status_code==404:
