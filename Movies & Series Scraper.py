@@ -100,11 +100,13 @@ else:       # Download a whole season
     html_page = requests.get("https://mycima.tube/series/%d9%85%d8%b3%d9%84%d8%b3%d9%84-"+str(series_name)+"-%d9%85%d9%88%d8%b3%d9%85-"+str(season)+"-")
     if html_page.status_code == 404:
         html_page = requests.get("https://mycima.tube/series/%D9%85%D9%88%D8%B3%D9%85-"+str(season)+"-%D9%85%D8%B3%D9%84%D8%B3%D9%84-"+str(series_name))
+    if html_page.status_code == 404:
+        html_page = requests.get("https://mycima.tube/series/%d9%85%d9%88%d8%b3%d9%85-"+str(season)+"-"+str(series_name))
     soup = BeautifulSoup(html_page.content, "lxml")
     x = soup.find('ul', {'class': "Season--Download--Mycima--Single"})
     if x is None:
         print("This feature is not available for "+str(series_name)+" season "+str(season)+"!")
-        exit(1)
+        quit()
 
     temp = x.findAll("a")
     qualities = soup.find_all("resolution")
