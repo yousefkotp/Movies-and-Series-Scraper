@@ -97,32 +97,28 @@ else:       # Download a whole season
     series_name = series_name.replace(" ", "-")
     season = int(input("Enter Season number: "))
 
-    html_page = requests.get("https://mycima.dev:2053/watch/%D9%85%D8%B4%D8%A7%D9%87%D8%AF%D8%A9-%D9%85%D8%B3%D9%84%D8%B3%D9%84-"+series_name+"-%D9%85%D9%88%D8%B3%D9%85-"+str(season)+"-%D8%AD%D9%84%D9%82%D8%A9-1-")
+    html_page = requests.get("https://mycima.tube/series/%d9%85%d8%b3%d9%84%d8%b3%d9%84-"+str(series_name)+"-%d9%85%d9%88%d8%b3%d9%85-"+str(season)+"-")
     if html_page.status_code == 404:
-        html_page = requests.get("https://mycima.dev:2053/watch/%D9%85%D8%B4%D8%A7%D9%87%D8%AF%D9%87-%D9%85%D8%B3%D9%84%D8%B3%D9%84-" + series_name + "-%D9%85%D9%88%D8%B3%D9%85-" + str(season) + "-%D8%AD%D9%84%D9%82%D8%A9-1-")
-    if html_page.status_code == 404:
-        html_page = requests.get("https://mycima.cloud/watch/%d9%85%d8%b3%d9%84%d8%b3%d9%84-"+series_name+"%d9%85%d9%88%d8%b3%d9%85-"+str(season)+"-%d8%ad%d9%84%d9%82%d8%a9-1")
-    if html_page.status_code == 404:
-        html_page = requests.get("https://mycima.cloud/watch/%d9%85%d8%b3%d9%84%d8%b3%d9%84-"+series_name+"-%d9%85%d9%88%d8%b3%d9%85-"+str(season)+"-%d8%ad%d9%84%d9%82%d8%a9-1/")
-
+        html_page = requests.get("https://mycima.tube/series/%D9%85%D9%88%D8%B3%D9%85-"+str(season)+"-%D9%85%D8%B3%D9%84%D8%B3%D9%84-"+str(series_name))
     soup = BeautifulSoup(html_page.content, "lxml")
-    x = soup.find_all("div", {"class": "SeasonDownload"})
-    if len(x) == 0:
+    x = soup.find('ul', {'class': "Season--Download--Mycima--Single"})
+    if x is None:
         print("This feature is not available for "+str(series_name)+" season "+str(season)+"!")
-        exit()
+        exit(1)
 
-    temp = soup.find_all("ul", {"class": "List--Download--Mycima--Single"})[1].findAll("a")
+    temp = x.findAll("a")
+    qualities = soup.find_all("resolution")
     links = []
     for i in temp:
         links.append(i.get("href"))
 
-    if len(links) >= 3:
-        quality = int(input("Enter your desired quality: \n1- 1080p\n2- 720p\n3- 480p/360\n"))
-    elif len(links) == 2:
-        quality = int(input("Enter your desired quality: \n1- 720p\n2- 480p/360p\n"))
-    else:
-        quality = int(input("Enter your desired quality: \n1- 480p\n"))
+    counter_qualities = 1
+    for i in qualities:
+        print(str(counter_qualities)+"- " + i.text)
+        counter_qualities += 1
 
+    quality = int(input("Enter your desired quality: "))
     webbrowser.open(links[quality-1])
+
 
 input("Enter any key to exit: ")
