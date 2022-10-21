@@ -40,20 +40,21 @@ if option == 1:                      # Watch a series
 
     # Scraping links and titles of seasons of the desired series
     temp_list = soup.find("div", {"class": "List--Seasons--Episodes"})
-    seasons_links = temp_list.findAll("a")          # i.get("href")
+    if temp_list is None:
+        print("There is only one season available")
+        temp_list = soup.find("div", {"class": "Seasons--Episodes"})
+        episodes_links = temp_list.findAll("a")
+    else:
+        seasons_links = temp_list.findAll("a")  # i.get("href")
+        season = int(input("There are " + str(len(seasons_links)) + " Seasons, Enter your desired season number: "))
+        # Preparing html page and soup to be used to scrape episodes links
+        html_page = requests.get(seasons_links[season - 1].get("href"))
+        soup = BeautifulSoup(html_page.content, "lxml")
 
-
-    season = int(input("There are "+str(len(seasons_links))+" Seasons, Enter your desired season number: "))
-
-    # Preparing html page and soup to be used to scrape episodes links
-    html_page = requests.get(seasons_links[season-1].get("href"))
-    soup = BeautifulSoup(html_page.content, "lxml")
-
-
-    # Scraping episodes links and titles
-    temp_list = soup.find("div", {"class": "Episodes--Seasons--Episodes"})
-    episodes_links = temp_list.findAll("a")
-    episodes_links.reverse()
+        # Scraping episodes links and titles
+        temp_list = soup.find("div", {"class": "Episodes--Seasons--Episodes"})
+        episodes_links = temp_list.findAll("a")
+        episodes_links.reverse()
 
     print("There are " + str(len(episodes_links)) + " episodes")
     ep1 = int(input("Enter episode number (from): "))
